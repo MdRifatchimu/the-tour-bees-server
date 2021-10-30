@@ -51,7 +51,7 @@ async function run() {
       res.json(result);
     });
     // used get method for getting tour orders api form mongo database
-    app.get("/tourservices", async (req, res) => {
+    app.get("/tourorders", async (req, res) => {
       const cursor = orderCollection.find({});
       const tourOrders = await cursor.toArray();
       res.send(tourOrders);
