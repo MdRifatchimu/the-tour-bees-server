@@ -26,18 +26,29 @@ async function run() {
 
     const tourServicesCollection = database.collection("Tour_Services");
 
-    // const orderCollection = database.collection("orders");
+    const orderCollection = database.collection("Tour_Orders");
+
+    // used get method for getting api form mongo database
     app.get("/tourservices", async (req, res) => {
       const cursor = tourServicesCollection.find({});
       const tourServices = await cursor.toArray();
       res.send(tourServices);
     });
 
+    //for getting details of a single service
     app.get("/tourservices/:id", async (req, res) => {
       const id = req.params.id;
       const query = {_id: ObjectId(id)};
       const tourService = await tourServicesCollection.findOne(query);
       res.json(tourService);
+    });
+
+    //use post method for adding Tour orders
+
+    app.post("/tourorders", async (req, res) => {
+      const tourOrder = req.body;
+      const result = await orderCollection.insertOne(tourOrder);
+      res.json(result);
     });
   } finally {
     //   await client.close();
