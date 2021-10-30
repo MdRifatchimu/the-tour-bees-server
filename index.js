@@ -28,7 +28,7 @@ async function run() {
 
     const orderCollection = database.collection("Tour_Orders");
 
-    // used get method for getting api form mongo database
+    // used get method for getting tour service api form mongo database
     app.get("/tourservices", async (req, res) => {
       const cursor = tourServicesCollection.find({});
       const tourServices = await cursor.toArray();
@@ -49,6 +49,12 @@ async function run() {
       const tourOrder = req.body;
       const result = await orderCollection.insertOne(tourOrder);
       res.json(result);
+    });
+    // used get method for getting tour orders api form mongo database
+    app.get("/tourservices", async (req, res) => {
+      const cursor = orderCollection.find({});
+      const tourOrders = await cursor.toArray();
+      res.send(tourOrders);
     });
   } finally {
     //   await client.close();
