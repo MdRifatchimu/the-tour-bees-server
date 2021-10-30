@@ -25,11 +25,19 @@ async function run() {
     const database = client.db("The_Tour_Bees");
 
     const tourServicesCollection = database.collection("Tour_Services");
+
     // const orderCollection = database.collection("orders");
     app.get("/tourservices", async (req, res) => {
       const cursor = tourServicesCollection.find({});
       const tourServices = await cursor.toArray();
       res.send(tourServices);
+    });
+
+    app.get("/tourservices/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: ObjectId(id)};
+      const tourService = await tourServicesCollection.findOne(query);
+      res.json(tourService);
     });
   } finally {
     //   await client.close();
