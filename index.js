@@ -42,6 +42,14 @@ async function run() {
       const tourService = await tourServicesCollection.findOne(query);
       res.json(tourService);
     });
+    // add a tour service to the database
+    app.post("/tourservices", async (req, res) => {
+      const tourService = req.body;
+
+      const result = await tourServicesCollection.insertOne(tourService);
+
+      res.json(result);
+    });
 
     //use post method for adding Tour orders
 
