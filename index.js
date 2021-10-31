@@ -64,6 +64,25 @@ async function run() {
       const tourOrders = await cursor.toArray();
       res.send(tourOrders);
     });
+
+    // get orders of a specific user by email
+
+    app.get("/myorders/:email", (req, res) => {
+      orderCollection
+        .find({email: req.params.email})
+        .toArray((err, results) => {
+          res.send(results);
+        });
+    });
+
+    //delete api tour order data
+
+    app.delete("/deletetourorders/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: ObjectId(id)};
+      const result = await orderCollection.deleteOne(query);
+      res.json(result);
+    });
   } finally {
     //   await client.close();
   }
